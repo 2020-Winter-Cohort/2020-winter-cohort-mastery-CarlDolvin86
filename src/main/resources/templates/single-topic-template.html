@@ -28,11 +28,22 @@
                 <div th:each="post: ${topic.posts}">
                     <a th:text="${post.title}" th:href="'/posts/'+${post.id}" href="#"
                        class="posts__nav-link"></a>
-                </div>
-            </nav>
+             </div>
+            <div class="formDiv">
+                <form th:action="'/posts/addPost/' + ${topic.id}" method="POST">
+                    <label for="titleBox">Title:  </label>
+                    <input type="text" id="titleBox" name="newTitle">
+
+                    <label for="author">Author:  </label>
+                    <input type="text" id="author" name="newAuthor">
+
+                    <label for="topic">Topic:  </label>
+                    <textarea type="text" id="topic" name="newTopic"></textarea>
+                    <button type="submit">Add Topic</button>
+                </form>
+            </div>
         </section>
     </main>
 </div>
 </body>
-
 </html>
