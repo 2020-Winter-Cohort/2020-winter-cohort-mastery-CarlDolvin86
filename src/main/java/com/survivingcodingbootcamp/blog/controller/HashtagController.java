@@ -1,15 +1,11 @@
 package com.survivingcodingbootcamp.blog.controller;
 
 import com.survivingcodingbootcamp.blog.model.Hashtag;
-import com.survivingcodingbootcamp.blog.model.Post;
 import com.survivingcodingbootcamp.blog.storage.HashtagStorage;
 import com.survivingcodingbootcamp.blog.storage.PostStorage;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
-import javax.websocket.server.PathParam;
-import java.util.HashSet;
 
 @Controller
 public class HashtagController {
@@ -19,7 +15,7 @@ public class HashtagController {
 
     public HashtagController(HashtagStorage hashtagStorage, PostStorage postStorage) {
         this.hashtagStorage = hashtagStorage;
-        this.postStorage = postStorage;
+        this.postStorage =  postStorage;
     }
 
     @RequestMapping("/hashtags")
@@ -41,7 +37,7 @@ public class HashtagController {
         Hashtag addedHashtag = null;
         Hashtag addedToAllHashtag = null;
 
-      for(Hashtag i: postStorage.retrievePostById(newId).getHashtag()){
+        for(Hashtag i: postStorage.retrievePostById(newId).getHashtag()){
             if(i.getName().equals(name)) {
                 addedHashtag = i;
             }
@@ -52,15 +48,16 @@ public class HashtagController {
                 addedToAllHashtag = i;
             }
         }
-       
+        //check if hashtag already exist, if not add to hashtag page
+
         if(addedHashtag == null && addedToAllHashtag == null && !name.equals("")) {
 
             addedHashtag = new Hashtag(name, postStorage.retrievePostById(newId));
             hashtagStorage.save(addedHashtag);
         } else if(addedToAllHashtag != null) {
-           hashtagStorage.addPost(addedToAllHashtag.getId(), postStorage.retrievePostById(newId));
+            hashtagStorage.addPost(addedToAllHashtag.getId(), postStorage.retrievePostById(newId));
         }
-
-    return "redirect:/posts/" + newId;
+        return "redirect:/posts/" + newId;
     }
+
 }
