@@ -2,6 +2,7 @@ package com.survivingcodingbootcamp.blog.storage;
 
 import com.survivingcodingbootcamp.blog.model.Topic;
 import com.survivingcodingbootcamp.blog.storage.repository.TopicRepository;
+
 import org.springframework.stereotype.Service;
 
 @Service
